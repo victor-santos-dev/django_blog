@@ -27,4 +27,16 @@ class Comment(models.Model):
     author = models.ForeignKey(max_length=200)
     text = models.TextField()
     create_date = models.DataTimeField(default=timezone.now())
+    approved_comment = models.BooleanField(default=False)    approved_comment = models.BooleanField(default=False)
     approved_comment = models.BooleanField(default=False)
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def get_absolute_url(self):
+        return reverse('post_list')
+
+    def __str__(self):
+
+        return f'{self.author} - {self.create_date}'
